@@ -20,6 +20,11 @@ svr.listen(SERVER_PORT, function(){
 
 // サーバーにリクエストがあった時の処理
 function checkRequest(req, res) {
+    if (path.normalize(decodeURI(uri.pathname)) !== decodeURI(uri.pathname)) {
+        res.writeHead(403, {'Content-Type':'text/html'});
+        res.end();
+        return;
+    }
   var uri = URL.parse(req.url, true);
   var pathname = uri.pathname;
   if (pathname == "/") pathname = FILE_DEFAULT;
